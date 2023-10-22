@@ -22,6 +22,7 @@ public class LodaRestController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/login")
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 

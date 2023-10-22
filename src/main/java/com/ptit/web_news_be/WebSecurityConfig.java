@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,6 +23,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.server.WebFilter;
+import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -68,18 +79,12 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/login").permitAll()
-                .anyRequest().authenticated()// với endpoint /hello thì sẽ được cho qua
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
+        System.out.println("security bean");
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(req -> req.requestMatchers("/api/login").permitAll().anyRequest().permitAll())
+                .formLogin(formLogin -> formLogin.loginPage("/login").permitAll())
+                .logout(logout -> logout.permitAll())
+                .cors(cors -> cors.disable())
         ;
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
