@@ -1,11 +1,13 @@
 package com.ptit.web_news_be.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "articles")
+@Data
 public class ArticlesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

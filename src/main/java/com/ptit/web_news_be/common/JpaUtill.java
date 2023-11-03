@@ -6,7 +6,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class JpaUtill {
     private static Query buildQuery(EntityManager em, StringBuilder sql, HashMap<String, Object> params, String mapClass, Pageable pageable){
@@ -53,8 +55,37 @@ public class JpaUtill {
         return query;
     }
 
-//    public static <T> PageImpl<T> getPageableResult (EntityManager em, StringBuilder sql, HashMap<String, Object> params, String mapClass, Pageable pageable) {
-//        Query queryCount = buildQuery(em, sql, params, mapClass, null);
-//        long countResult = queryCount.getSingleResult();
-//    }
+    public static <T> PageImpl<T> getPageableResult (EntityManager em, StringBuilder sql, HashMap<String, Object> params, String mapClass, Pageable pageable) {
+        try {
+            Query queryCount = buildQuery(em, sql, params, mapClass, null);
+            long countResult = Long.valueOf(queryCount.getSingleResult().toString());
+            List result = new ArrayList<>();
+            if (countResult > 0) {
+                Query query = buildQuery(em, sql, params, mapClass, pageable);
+                result = query.getResultList();
+            }
+            return new PageImpl<>(result, pageable, countResult);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public static <T> PageImpl<T> getPageableResult (EntityManager em, StringBuilder sql, HashMap<String, Object> params, Class mapClass, Pageable pageable) {
+        try {
+            Query queryCount = buildQuery(em, sql, params, mapClass, null);
+            long countResult = Long.valueOf(queryCount.getSingleResult().toString());
+            List result = new ArrayList<>();
+            if (countResult > 0) {
+                Query query = buildQuery(em, sql, params, mapClass, pageable);
+                result = query.getResultList();
+            }
+            return new PageImpl<>(result, pageable, countResult);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            em.close();
+        }
+    }
 }

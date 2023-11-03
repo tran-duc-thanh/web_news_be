@@ -1,9 +1,11 @@
 package com.ptit.web_news_be.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "categories")
+@Data
 public class CategorysEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
