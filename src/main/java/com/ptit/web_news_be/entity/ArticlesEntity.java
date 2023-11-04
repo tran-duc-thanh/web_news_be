@@ -38,6 +38,6 @@ public class ArticlesEntity {
     @Column(name = "Dislikes")
     private Integer dislikes;
 
-    @Column(name = "ImageBase64")
+    @Column(name = "ImageBase64", nullable = false)
     private String imageBase64;
 }

@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: web_news_db
 -- ------------------------------------------------------
@@ -28,11 +28,11 @@ CREATE TABLE `articles` (
   `Content` text NOT NULL,
   `AuthorID` int DEFAULT NULL,
   `CategoryID` int DEFAULT NULL,
-  `PublicationDate` date DEFAULT NULL,
+  `publication_date` date DEFAULT NULL,
   `Views` int DEFAULT '0',
   `Likes` int DEFAULT '0',
   `Dislikes` int DEFAULT '0',
-  `ImageBase64` text,
+  `image_base64` text,
   PRIMARY KEY (`ArticleID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -43,7 +43,7 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
-INSERT INTO `articles` VALUES (1,'Bài viết 1','Nội dung bài viết 1',1,1,'2023-10-01',0,0,0,NULL),(2,'Bài viết 2','Nội dung bài viết 2',2,2,'2023-10-02',0,0,0,NULL),(3,'Bài viết 3','Nội dung bài viết 3',1,3,'2023-10-03',0,0,0,NULL);
+INSERT INTO `articles` VALUES (1,'Bài viết 1','Nội dung bài viết 1',1,1,'2023-10-01',0,0,0,NULL),(2,'Bài viết 2','Nội dung bài viết 2',2,2,'2023-10-02',0,0,0,NULL),(3,'Bài viết 3','Nội dung bài viết 3',1,2,'2023-10-03',0,0,0,NULL);
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +185,7 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,4 +207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-31 23:03:58
+-- Dump completed on 2023-11-04 11:56:43
