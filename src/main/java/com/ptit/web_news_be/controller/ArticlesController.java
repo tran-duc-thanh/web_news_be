@@ -2,11 +2,9 @@ package com.ptit.web_news_be.controller;
 
 import com.ptit.web_news_be.entity.ArticlesEntity;
 import com.ptit.web_news_be.service.ArticlesService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +29,14 @@ public class ArticlesController {
     }
 
     @GetMapping("/category/{categoryID}")
-    public ResponseEntity<List<ArticlesEntity>> getAllByCategory (@PathVariable("categoryID") Long categoryID) {
-        return ResponseEntity.ok(articlesService.getArticlesByCategory(categoryID));
+    public ResponseEntity<Page<ArticlesEntity>> getAllByCategory (@PathVariable("categoryID") Long categoryID,
+                                                                  @RequestParam Integer page,
+                                                                  @RequestParam Integer size) {
+        return ResponseEntity.ok(articlesService.getArticlesByCategory(categoryID, page, size));
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<ArticlesEntity> saveArticles (@RequestBody ArticlesEntity articles) {
+        return ResponseEntity.ok(articlesService.save(articles));
     }
 }

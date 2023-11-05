@@ -3,6 +3,9 @@ package com.ptit.web_news_be.service.impl;
 import com.ptit.web_news_be.entity.ArticlesEntity;
 import com.ptit.web_news_be.repository.ArticlesRepo;
 import com.ptit.web_news_be.service.ArticlesService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +26,13 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
-    public List<ArticlesEntity> getArticlesByCategory(Long categoryId) {
-        return articlesRepo.findAllByCategoryID(categoryId);
+    public Page<ArticlesEntity> getArticlesByCategory(Long categoryId, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articlesRepo.findAllByCategoryID(categoryId, pageable);
+    }
+
+    @Override
+    public ArticlesEntity save(ArticlesEntity articlesEntity) {
+        return articlesRepo.save(articlesEntity);
     }
 }
