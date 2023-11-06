@@ -27,7 +27,7 @@ public class ArticlesEntity {
     private Long categoryID;
 
     @Column(name = "PublicationDate")
-    private Date publicationDate;
+    private String publicationDate;
 
     @Column(name = "Views")
     private Integer views;

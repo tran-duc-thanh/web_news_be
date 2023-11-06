@@ -19,6 +19,7 @@ public class ArticlesController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     public ResponseEntity<ArticlesEntity> getOne (@PathVariable("id") Long id) {
         Optional<ArticlesEntity> article = articlesService.getOne(id);
         if (article.isPresent()) {
@@ -29,6 +30,7 @@ public class ArticlesController {
     }
 
     @GetMapping("/category/{categoryID}")
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     public ResponseEntity<Page<ArticlesEntity>> getAllByCategory (@PathVariable("categoryID") Long categoryID,
                                                                   @RequestParam Integer page,
                                                                   @RequestParam Integer size) {
@@ -36,6 +38,7 @@ public class ArticlesController {
     }
 
     @PostMapping("/")
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     public ResponseEntity<ArticlesEntity> saveArticles (@RequestBody ArticlesEntity articles) {
         return ResponseEntity.ok(articlesService.save(articles));
     }
