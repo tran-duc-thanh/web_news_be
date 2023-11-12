@@ -33,8 +33,9 @@ public class ArticlesController {
     @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     public ResponseEntity<Page<ArticlesEntity>> getAllByCategory (@PathVariable("categoryID") Long categoryID,
                                                                   @RequestParam Integer page,
-                                                                  @RequestParam Integer size) {
-        return ResponseEntity.ok(articlesService.getArticlesByCategory(categoryID, page, size));
+                                                                  @RequestParam Integer size,
+                                                                  @RequestParam String sort) {
+        return ResponseEntity.ok(articlesService.getArticlesByCategory(categoryID, page, size, sort));
     }
 
     @PostMapping("/")

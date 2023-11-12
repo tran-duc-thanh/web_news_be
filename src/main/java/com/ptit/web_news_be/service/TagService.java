@@ -8,4 +8,5 @@ import java.util.List;
 public interface TagService {
     List<TagsEntity> getAll ();
     void saveTagsForArticle (List<ArticleTagsEntity> tags);
+    TagsEntity addTag (TagsEntity tag);
 }

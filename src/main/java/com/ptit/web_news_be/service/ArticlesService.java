@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface ArticlesService {
     Optional<ArticlesEntity> getOne (Long id);
-    Page<ArticlesEntity> getArticlesByCategory (Long categoryId, Integer page, Integer size);
+    Page<ArticlesEntity> getArticlesByCategory (Long categoryId, Integer page, Integer size, String sort);
     ArticlesEntity save (ArticlesEntity articlesEntity);
 }

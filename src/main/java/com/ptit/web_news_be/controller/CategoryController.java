@@ -3,10 +3,7 @@ package com.ptit.web_news_be.controller;
 import com.ptit.web_news_be.entity.CategorysEntity;
 import com.ptit.web_news_be.service.CategoryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,20 @@ public class CategoryController {
     @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     public ResponseEntity<List<CategorysEntity>> getAll () {
         List<CategorysEntity> results = categoryService.getAll();
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/{id}")
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
+    public ResponseEntity<CategorysEntity> getOne (@PathVariable("id") Long id) {
+        CategorysEntity result = categoryService.getOne(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/")
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
+    public ResponseEntity<CategorysEntity> save (@RequestBody CategorysEntity category) {
+        CategorysEntity results = categoryService.addCategory(category);
         return ResponseEntity.ok(results);
     }
 }

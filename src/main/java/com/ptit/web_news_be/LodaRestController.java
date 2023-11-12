@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,9 +39,12 @@ public class LodaRestController {
         // Set thông tin authentication vào Security Context
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) authentication.getPrincipal();
         // Trả về jwt cho người dùng.
         String jwt = tokenProvider.generateToken((CustomUserDetail) authentication.getPrincipal());
-        return new LoginResponse(jwt);
+        String username = userDetail.getUsername();
+        return new LoginResponse(jwt, username);
     }
 
     // Api /api/random yêu cầu phải xác thực mới có thể request

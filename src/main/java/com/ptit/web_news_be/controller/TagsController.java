@@ -24,6 +24,12 @@ public class TagsController {
         return ResponseEntity.ok(tagService.getAll());
     }
 
+    @PostMapping("/")
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
+    public ResponseEntity<TagsEntity> save (@RequestBody TagsEntity tag) {
+        return ResponseEntity.ok(tagService.addTag(tag));
+    }
+
     @PostMapping("/save/tagsArticle")
     @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     public void saveTagsForArticle (@RequestBody List<ArticleTagsEntity> mapTagsArticle) {

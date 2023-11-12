@@ -6,6 +6,7 @@ import com.ptit.web_news_be.service.ArticlesService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +27,9 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
-    public Page<ArticlesEntity> getArticlesByCategory(Long categoryId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<ArticlesEntity> getArticlesByCategory(Long categoryId, Integer page, Integer size, String sort) {
+        Sort s = Sort.by(sort).descending();
+        Pageable pageable = PageRequest.of(page, size, s);
         return articlesRepo.findAllByCategoryID(categoryId, pageable);
     }
 

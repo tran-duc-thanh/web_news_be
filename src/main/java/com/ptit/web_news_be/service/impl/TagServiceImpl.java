@@ -29,4 +29,9 @@ public class TagServiceImpl implements TagService {
     public void saveTagsForArticle(List<ArticleTagsEntity> tags) {
         articleTagsRepo.saveAll(tags);
     }
+
+    @Override
+    public TagsEntity addTag(TagsEntity tag) {
+        return tagsRepo.save(tag);
+    }
 }

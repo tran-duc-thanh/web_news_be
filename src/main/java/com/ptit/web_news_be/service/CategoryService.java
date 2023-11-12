@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CategoryService {
     List<CategorysEntity> getAll ();
+    CategorysEntity addCategory (CategorysEntity category);
+    CategorysEntity getOne (Long id);
 }
