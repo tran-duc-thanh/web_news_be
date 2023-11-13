@@ -34,6 +34,13 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
+    public Page<ArticlesEntity> search(Long categoryId, Integer page, Integer size, String sort, String keySearch) {
+        Sort s = Sort.by(sort).descending();
+        Pageable pageable = PageRequest.of(page, size, s);
+        return articlesRepo.findByTitleContaining(keySearch, pageable);
+    }
+
+    @Override
     public ArticlesEntity save(ArticlesEntity articlesEntity) {
         return articlesRepo.save(articlesEntity);
     }

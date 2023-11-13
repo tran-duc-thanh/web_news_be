@@ -20,6 +20,9 @@ public class ArticlesEntity {
     @Column(name = "Content")
     private String content;
 
+    @Column(name = "SubContent")
+    private String subContent;
+
     @Column(name = "AuthorID")
     private Long authorID;
 

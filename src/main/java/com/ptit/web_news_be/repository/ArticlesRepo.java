@@ -10,4 +10,5 @@ import java.util.Optional;
 
 public interface ArticlesRepo extends JpaRepository<ArticlesEntity, Long> {
     Page<ArticlesEntity> findAllByCategoryID (Long categoryId, Pageable pageable);
+    Page<ArticlesEntity> findByTitleContaining (String keyword, Pageable pageable);
 }

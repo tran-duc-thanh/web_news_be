@@ -38,6 +38,16 @@ public class ArticlesController {
         return ResponseEntity.ok(articlesService.getArticlesByCategory(categoryID, page, size, sort));
     }
 
+    @GetMapping("/search/{categoryID}")
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
+    public ResponseEntity<Page<ArticlesEntity>> search (@PathVariable("categoryID") Long categoryID,
+                                                                  @RequestParam Integer page,
+                                                                  @RequestParam Integer size,
+                                                                  @RequestParam String sort,
+                                                                  @RequestParam String keySearch) {
+        return ResponseEntity.ok(articlesService.search(categoryID, page, size, sort, keySearch));
+    }
+
     @PostMapping("/")
     @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     public ResponseEntity<ArticlesEntity> saveArticles (@RequestBody ArticlesEntity articles) {
