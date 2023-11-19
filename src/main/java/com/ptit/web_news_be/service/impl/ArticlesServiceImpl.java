@@ -34,7 +34,14 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
-    public Page<ArticlesEntity> search(Long categoryId, Integer page, Integer size, String sort, String keySearch) {
+    public Page<ArticlesEntity> searchInCategory(Long categoryId, Integer page, Integer size, String sort, String keySearch) {
+        Sort s = Sort.by(sort).descending();
+        Pageable pageable = PageRequest.of(page, size, s);
+        return articlesRepo.findByCategoryIDAndTitleContaining(categoryId, keySearch, pageable);
+    }
+
+    @Override
+    public Page<ArticlesEntity> search(Integer page, Integer size, String sort, String keySearch) {
         Sort s = Sort.by(sort).descending();
         Pageable pageable = PageRequest.of(page, size, s);
         return articlesRepo.findByTitleContaining(keySearch, pageable);

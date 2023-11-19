@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface ArticlesService {
     Optional<ArticlesEntity> getOne (Long id);
     Page<ArticlesEntity> getArticlesByCategory (Long categoryId, Integer page, Integer size, String sort);
-    Page<ArticlesEntity> search (Long categoryId, Integer page, Integer size, String sort, String keySearch);
+    Page<ArticlesEntity> searchInCategory (Long categoryId, Integer page, Integer size, String sort, String keySearch);
+    Page<ArticlesEntity> search (Integer page, Integer size, String sort, String keySearch);
     ArticlesEntity save (ArticlesEntity articlesEntity);
 }
