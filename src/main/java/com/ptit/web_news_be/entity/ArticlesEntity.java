@@ -41,6 +41,7 @@ public class ArticlesEntity {
     @Column(name = "Dislikes")
     private Integer dislikes;
 
-    @Column(name = "ImageBase64", nullable = false)
+    @Lob
+    @Column(name = "ImageBase64", columnDefinition = "LONGTEXT")
     private String imageBase64;
 }
