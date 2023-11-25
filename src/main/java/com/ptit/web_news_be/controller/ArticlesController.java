@@ -20,8 +20,8 @@ public class ArticlesController {
 
     @GetMapping("/{id}")
     @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
-    public ResponseEntity<ArticlesEntity> getOne(@PathVariable("id") Long id) {
-        Optional<ArticlesEntity> article = articlesService.getOne(id);
+    public ResponseEntity<ArticlesEntity> getOne(@PathVariable("id") Long id, @RequestParam String username) {
+        Optional<ArticlesEntity> article = articlesService.getOne(id, username);
         if (article.isPresent()) {
             return ResponseEntity.ok(article.get());
         } else {

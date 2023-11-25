@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class LodaRestController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
     @PostMapping("/login")
@@ -68,6 +72,39 @@ public class LodaRestController {
         return response;
     }
 
+    @CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
+    @PostMapping("/register")
+    public LoginResponse register(@Valid @RequestBody LoginRequest loginRequest) {
+        User user = new User();
+		user.setUsername(loginRequest.getUsername());
+		user.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+        user = userRepository.save(user);
+        MapRoleUserEntity mapRoleUserEntity = new MapRoleUserEntity();
+        mapRoleUserEntity.setRoleId(2L);
+        mapRoleUserEntity.setUserId(user.getId());
+        mapRoleUserRepo.save(mapRoleUserEntity);
+        // Xác thực từ username và password.
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        // Nếu không xảy ra exception tức là thông tin hợp lệ
+        // Set thông tin authentication vào Security Context
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) authentication.getPrincipal();
+        // Trả về jwt cho người dùng.
+        String jwt = tokenProvider.generateToken((CustomUserDetail) authentication.getPrincipal());
+        String username = userDetail.getUsername();
+        List<RolesEntity> roles = getRolesByUsername(username);
+        LoginResponse response = new LoginResponse(jwt, username);
+        response.setRoles(roles);
+        return response;
+    }
     // Api /api/random yêu cầu phải xác thực mới có thể request
     @GetMapping("/random")
     public RandomStuff randomStuff(){
