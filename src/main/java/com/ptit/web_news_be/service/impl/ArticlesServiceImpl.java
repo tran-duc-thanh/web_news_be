@@ -31,7 +31,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     @Override
     public Optional<ArticlesEntity> getOne(Long id, String username) {
         Optional<ArticlesEntity> articles = articlesRepo.findById(id);
-        if (username != null) {
+        if (username != null && !username.isEmpty()) {
             User user = userRepository.findByUsername(username).get();
             Optional<PostViewStatisticsEntity> view = postViewStatisticsRepo.findByUserIdAndCategoryID(user.getId(), articles.get().getCategoryID());
             if (view.isPresent()) {
